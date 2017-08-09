@@ -8,7 +8,7 @@
         Title="MainWindow" Height="350" Width="525" SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="28*"/>
+            <RowDefinition Height="22" MaxHeight="22" MinHeight="22"/>
             <RowDefinition Height="170*"/>
             <RowDefinition Height="121*"/>
         </Grid.RowDefinitions>
@@ -16,7 +16,7 @@
             <ColumnDefinition Width="136*"/>
             <ColumnDefinition Width="381*"/>
         </Grid.ColumnDefinitions>
-        <Menu IsMainMenu="True" Grid.ColumnSpan="2">
+        <Menu IsMainMenu="True" Grid.ColumnSpan="2" MinHeight="22">
             <MenuItem Header="_File">
                 <MenuItem Header="_Add"/>
                 <MenuItem Header="_Exit"/>
@@ -28,8 +28,8 @@
                 <MenuItem Header="_All"></MenuItem>
             </MenuItem>
         </Menu>
-        <ListBox Grid.Row="1" Margin="0,0,0,0" Height="170" Width="136" VerticalContentAlignment="Top" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <ListBox HorizontalAlignment="Left" Height="111" Margin="0,0,0,0" VerticalAlignment="Top" Width="136" Grid.Row="2" VerticalContentAlignment="Top"/>
-        <ListView HorizontalAlignment="Left" Height="281" Margin="0,0,0,0" VerticalAlignment="Top" Width="371" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Top"/>
+        <ListBox Grid.Row="1" VerticalContentAlignment="Top" MinWidth="136" MinHeight="170"/>
+        <ListBox Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="False" MinWidth="136" MinHeight="121"/>
+        <ListView Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291"/>
     </Grid>
 </Window>
