@@ -28,8 +28,10 @@
                 <MenuItem Header="_All"></MenuItem>
             </MenuItem>
         </Menu>
-        <ListBox Grid.Row="1" VerticalContentAlignment="Top" MinWidth="136" MinHeight="170"/>
-        <ListBox Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="False" MinWidth="136" MinHeight="121"/>
-        <ListView Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291"/>
+        <ListBox x:Name="NavigatorView" Grid.Row="1" VerticalContentAlignment="Top" MinWidth="136" MinHeight="170"/>
+        <ListBox x:Name="PlaylistView" Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="False" MinWidth="136" MinHeight="121"/>
+        <ListView x:Name="ContentView" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291"/>
+        <StackPanel VerticalAlignment="Bottom" MaxHeight="20" Grid.Row="2" Panel.ZIndex="2">
+            <Button>+ Add new playlist</Button></StackPanel>
     </Grid>
 </Window>
