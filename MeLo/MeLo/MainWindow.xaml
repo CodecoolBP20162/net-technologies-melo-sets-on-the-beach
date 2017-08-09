@@ -5,14 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MeLo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525" SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="28*">
-                <RowDefinition.BindingGroup>
-                    <BindingGroup Name="first"/>
-                </RowDefinition.BindingGroup>
-            </RowDefinition>
+            <RowDefinition Height="28*"/>
             <RowDefinition Height="170*"/>
             <RowDefinition Height="121*"/>
         </Grid.RowDefinitions>
@@ -32,20 +28,8 @@
                 <MenuItem Header="_All"></MenuItem>
             </MenuItem>
         </Menu>
-        <ListBox Grid.Row="1" Margin="0,0,0,0" Height="170" Width="136" VerticalContentAlignment="Top" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ListBox.BindingGroup>
-                <BindingGroup Name="first"/>
-            </ListBox.BindingGroup>
-        </ListBox>
-        <ListBox HorizontalAlignment="Left" Height="111" Margin="0,0,0,0" VerticalAlignment="Top" Width="136" Grid.Row="2"/>
-        <ListView HorizontalAlignment="Left" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Top" Width="366" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-
+        <ListBox Grid.Row="1" Margin="0,0,0,0" Height="170" Width="136" VerticalContentAlignment="Top" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ListBox HorizontalAlignment="Left" Height="111" Margin="0,0,0,0" VerticalAlignment="Top" Width="136" Grid.Row="2" VerticalContentAlignment="Top"/>
+        <ListView HorizontalAlignment="Left" Height="281" Margin="0,0,0,0" VerticalAlignment="Top" Width="371" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Top"/>
     </Grid>
 </Window>
