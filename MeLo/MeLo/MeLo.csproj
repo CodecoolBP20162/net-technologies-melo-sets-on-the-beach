@@ -77,16 +77,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\MeLoModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MeLoModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MeLoModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MeLoModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Models\ExtensionSet.cs" />
+    <Compile Include="Models\MediaSet.cs" />
+    <Compile Include="Models\MeLoDBModels.cs" />
+    <Compile Include="Models\PlaylistSet.cs" />
+    <Compile Include="Models\TypeSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -104,13 +99,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Models\MeLoModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MeLoModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Models\MeLoModel.edmx.diagram">
-      <DependentUpon>MeLoModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -119,12 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Models\MeLoModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MeLoModel.Context.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
