@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MeLoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ExtensionSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaPlaylist">
+          <Key>
+            <PropertyRef Name="Media_Id" />
+            <PropertyRef Name="Playlist_Id" />
+          </Key>
+          <Property Name="Media_Id" Type="int" Nullable="false" />
+          <Property Name="Playlist_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Path" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlaylistSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MediaPlaylist_Media">
+          <End Role="MediaSet" Type="Self.MediaSet" Multiplicity="1" />
+          <End Role="MediaPlaylist" Type="Self.MediaPlaylist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MediaPlaylist">
+              <PropertyRef Name="Media_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaPlaylist_Playlist">
+          <End Role="PlaylistSet" Type="Self.PlaylistSet" Multiplicity="1" />
+          <End Role="MediaPlaylist" Type="Self.MediaPlaylist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlaylistSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MediaPlaylist">
+              <PropertyRef Name="Playlist_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaType">
+          <End Role="TypeSet" Type="Self.TypeSet" Multiplicity="1" />
+          <End Role="MediaSet" Type="Self.MediaSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MediaSet">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TypeExtension">
+          <End Role="TypeSet" Type="Self.TypeSet" Multiplicity="1" />
+          <End Role="ExtensionSet" Type="Self.ExtensionSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExtensionSet">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MeLoDBModelStoreContainer">
+          <EntitySet Name="ExtensionSet" EntityType="Self.ExtensionSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaPlaylist" EntityType="Self.MediaPlaylist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaSet" EntityType="Self.MediaSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaylistSet" EntityType="Self.PlaylistSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeSet" EntityType="Self.TypeSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MediaPlaylist_Media" Association="Self.FK_MediaPlaylist_Media">
+            <End Role="MediaSet" EntitySet="MediaSet" />
+            <End Role="MediaPlaylist" EntitySet="MediaPlaylist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaPlaylist_Playlist" Association="Self.FK_MediaPlaylist_Playlist">
+            <End Role="PlaylistSet" EntitySet="PlaylistSet" />
+            <End Role="MediaPlaylist" EntitySet="MediaPlaylist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaType" Association="Self.FK_MediaType">
+            <End Role="TypeSet" EntitySet="TypeSet" />
+            <End Role="MediaSet" EntitySet="MediaSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TypeExtension" Association="Self.FK_TypeExtension">
+            <End Role="TypeSet" EntitySet="TypeSet" />
+            <End Role="ExtensionSet" EntitySet="ExtensionSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MeLoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ExtensionSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TypeSet" Relationship="Self.FK_TypeExtension" FromRole="ExtensionSet" ToRole="TypeSet" />
+        </EntityType>
+        <EntityType Name="MediaSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TypeSet" Relationship="Self.FK_MediaType" FromRole="MediaSet" ToRole="TypeSet" />
+          <NavigationProperty Name="PlaylistSet" Relationship="Self.MediaPlaylist" FromRole="MediaSet" ToRole="PlaylistSet" />
+        </EntityType>
+        <EntityType Name="PlaylistSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MediaSet" Relationship="Self.MediaPlaylist" FromRole="PlaylistSet" ToRole="MediaSet" />
+        </EntityType>
+        <EntityType Name="TypeSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ExtensionSet" Relationship="Self.FK_TypeExtension" FromRole="TypeSet" ToRole="ExtensionSet" />
+          <NavigationProperty Name="MediaSet" Relationship="Self.FK_MediaType" FromRole="TypeSet" ToRole="MediaSet" />
+        </EntityType>
+        <Association Name="FK_TypeExtension">
+          <End Role="TypeSet" Type="Self.TypeSet" Multiplicity="1" />
+          <End Role="ExtensionSet" Type="Self.ExtensionSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExtensionSet">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaType">
+          <End Role="TypeSet" Type="Self.TypeSet" Multiplicity="1" />
+          <End Role="MediaSet" Type="Self.MediaSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MediaSet">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MediaPlaylist">
+          <End Role="MediaSet" Type="Self.MediaSet" Multiplicity="*" />
+          <End Role="PlaylistSet" Type="Self.PlaylistSet" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MeLoDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ExtensionSet" EntityType="Self.ExtensionSet" />
+          <EntitySet Name="MediaSet" EntityType="Self.MediaSet" />
+          <EntitySet Name="PlaylistSet" EntityType="Self.PlaylistSet" />
+          <EntitySet Name="TypeSet" EntityType="Self.TypeSet" />
+          <AssociationSet Name="FK_TypeExtension" Association="Self.FK_TypeExtension">
+            <End Role="TypeSet" EntitySet="TypeSet" />
+            <End Role="ExtensionSet" EntitySet="ExtensionSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaType" Association="Self.FK_MediaType">
+            <End Role="TypeSet" EntitySet="TypeSet" />
+            <End Role="MediaSet" EntitySet="MediaSet" />
+          </AssociationSet>
+          <AssociationSet Name="MediaPlaylist" Association="Self.MediaPlaylist">
+            <End Role="MediaSet" EntitySet="MediaSet" />
+            <End Role="PlaylistSet" EntitySet="PlaylistSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MeLoDBModelStoreContainer" CdmEntityContainer="MeLoDBContext">
+          <EntitySetMapping Name="ExtensionSet">
+            <EntityTypeMapping TypeName="MeLoDBModel.ExtensionSet">
+              <MappingFragment StoreEntitySet="ExtensionSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MediaSet">
+            <EntityTypeMapping TypeName="MeLoDBModel.MediaSet">
+              <MappingFragment StoreEntitySet="MediaSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaylistSet">
+            <EntityTypeMapping TypeName="MeLoDBModel.PlaylistSet">
+              <MappingFragment StoreEntitySet="PlaylistSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeSet">
+            <EntityTypeMapping TypeName="MeLoDBModel.TypeSet">
+              <MappingFragment StoreEntitySet="TypeSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MediaPlaylist" TypeName="MeLoDBModel.MediaPlaylist" StoreEntitySet="MediaPlaylist">
+            <EndProperty Name="MediaSet">
+              <ScalarProperty Name="Id" ColumnName="Media_Id" />
+            </EndProperty>
+            <EndProperty Name="PlaylistSet">
+              <ScalarProperty Name="Id" ColumnName="Playlist_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
