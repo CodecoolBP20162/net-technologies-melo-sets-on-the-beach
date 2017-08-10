@@ -24,5 +24,10 @@ namespace MeLo
         {
             InitializeComponent();
         }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("add clicked");
+        }
     }
 }

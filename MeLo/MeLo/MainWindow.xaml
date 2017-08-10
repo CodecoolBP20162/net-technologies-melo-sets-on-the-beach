@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
         <Menu IsMainMenu="True" Grid.ColumnSpan="2" MinHeight="22">
             <MenuItem Header="_File">
-                <MenuItem Header="_Add"/>
+                <MenuItem Header="_Add" Click="MenuItem_Click_1"/>
                 <MenuItem Header="_Exit"/>
             </MenuItem>
             <MenuItem Header="_Filter">
