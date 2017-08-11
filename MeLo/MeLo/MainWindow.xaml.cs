@@ -22,9 +22,12 @@ namespace MeLo
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Container container;
+
         public MainWindow()
         {
             InitializeComponent();
+            container = Container.Setup();
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
@@ -38,7 +41,7 @@ namespace MeLo
                 folderName = folderBrowser.SelectedPath;
             }
 
-            System.Windows.MessageBox.Show(folderName);
+            NavigatorView.Items.Add(folderName);
         }
     }
 }
