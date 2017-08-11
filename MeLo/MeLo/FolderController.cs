@@ -9,6 +9,19 @@ namespace MeLo
 {
     class FolderController
     {
+        private static FolderController instance;
+
+        private FolderController(){}
+
+        public static FolderController Setup()
+        {
+            if (instance == null)
+            {
+                instance = new FolderController();
+            }
+            return instance;
+        }
+
         public string GetFolderDialog()
         {
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();

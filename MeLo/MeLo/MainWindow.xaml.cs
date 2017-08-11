@@ -23,7 +23,7 @@ namespace MeLo
     public partial class MainWindow : Window
     {
         private Container container = Container.Setup();
-        private FolderController folderController = new FolderController();
+        private FolderController folderController = FolderController.Setup();
 
         public MainWindow()
         {
