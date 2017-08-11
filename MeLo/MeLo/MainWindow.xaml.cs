@@ -22,26 +22,17 @@ namespace MeLo
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Container container;
+        private Container container = Container.Setup();
+        private FolderController folderController = new FolderController();
 
         public MainWindow()
         {
             InitializeComponent();
-            container = Container.Setup();
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
-
-            DialogResult result = folderBrowser.ShowDialog();
-            String folderName = "";
-            if (result == System.Windows.Forms.DialogResult.OK )
-            {
-                folderName = folderBrowser.SelectedPath;
-            }
-
-            NavigatorView.Items.Add(folderName);
+            NavigatorView.Items.Add(folderController.GetFolderDialog());
         }
     }
 }
