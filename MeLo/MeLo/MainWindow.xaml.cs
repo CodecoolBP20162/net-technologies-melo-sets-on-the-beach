@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -20,6 +22,9 @@ namespace MeLo
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Container container = Container.Setup();
+        private FolderController folderController = FolderController.Setup();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +32,10 @@ namespace MeLo
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("add clicked");
+
+            Folder current = folderController.GetFolderDialog();
+            container.Add(current);
+            NavigatorView.Items.Add(current.Name);
         }
     }
 }
