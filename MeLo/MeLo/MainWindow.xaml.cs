@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -27,7 +29,16 @@ namespace MeLo
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("add clicked");
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+
+            DialogResult result = folderBrowser.ShowDialog();
+            String folderName = "";
+            if (result == System.Windows.Forms.DialogResult.OK )
+            {
+                folderName = folderBrowser.SelectedPath;
+            }
+
+            System.Windows.MessageBox.Show(folderName);
         }
     }
 }
