@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MeLo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" SizeToContent="WidthAndHeight">
+        Title="MainWindow" Height="350" Width="525" SizeToContent="WidthAndHeight" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="22" MaxHeight="22" MinHeight="22"/>
@@ -17,9 +17,9 @@
             <ColumnDefinition Width="381*"/>
         </Grid.ColumnDefinitions>
         <Menu IsMainMenu="True" Grid.ColumnSpan="2" MinHeight="22">
-            <MenuItem Header="_File">
+            <MenuItem Header="_File" Click="MenuItem_Click">
                 <MenuItem Header="_Add" Click="MenuItem_Click_1"/>
-                <MenuItem Header="_Exit"/>
+                <MenuItem Header="_Exit" Click="MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="_Filter">
                 <MenuItem Header="_Audio"></MenuItem>
@@ -32,6 +32,6 @@
         <ListBox x:Name="PlaylistView" Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="False" MinWidth="136" MinHeight="121"/>
         <ListView x:Name="ContentView" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291"/>
         <StackPanel VerticalAlignment="Bottom" MaxHeight="20" Grid.Row="2" Panel.ZIndex="2">
-            <Button>+ Add new playlist</Button></StackPanel>
+            <Button Click="Button_Click">+ Add new playlist</Button></StackPanel>
     </Grid>
 </Window>

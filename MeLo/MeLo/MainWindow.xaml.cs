@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MeLo.Models;
 
 namespace MeLo
 {
@@ -24,6 +25,7 @@ namespace MeLo
     {
         private Container container = Container.Setup();
         private FolderController folderController = FolderController.Setup();
+        private PlaylistController playlistController = PlaylistController.Setup();
 
         public MainWindow()
         {
@@ -32,10 +34,37 @@ namespace MeLo
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-
             Folder current = folderController.GetFolderDialog();
             container.Add(current);
             NavigatorView.Items.Add(current.Name);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            foreach(var item in playlistController.GetPlaylists())
+            {
+                PlaylistView.Items.Add(item.Name);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            PlaylistDialog dialog = new PlaylistDialog();
+
+            dialog.ShowDialog();
+
+            if (dialog.DialogResult == true)
+            {
+                string playlistname = dialog.newPlaylistTextbox.Text;
+                PlaylistView.Items.Add(playlistname);
+                playlistController.SavePlaylistToDatabase(playlistname);
+                dialog.Close();
+            }
         }
     }
 }

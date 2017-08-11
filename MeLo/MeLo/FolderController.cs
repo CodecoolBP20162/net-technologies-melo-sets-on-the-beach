@@ -10,7 +10,6 @@ namespace MeLo
 {
     class FolderController
     {
-        
         private static FolderController instance;
 
         private FolderController(){}
