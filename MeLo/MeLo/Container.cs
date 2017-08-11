@@ -9,7 +9,7 @@ namespace MeLo
     class Container
     {
         private static Container instance;
-        public List<Folder> folders;
+        private List<Folder> folders = new List<Folder>();
 
         private Container(){}
 
@@ -20,6 +20,11 @@ namespace MeLo
                 instance = new Container();
             }
             return instance;
+        }
+
+        public void Add(Folder folder)
+        {
+            folders.Add(folder);
         }
     }
 }

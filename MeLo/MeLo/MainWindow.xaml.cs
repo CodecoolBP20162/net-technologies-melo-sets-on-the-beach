@@ -32,7 +32,10 @@ namespace MeLo
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            NavigatorView.Items.Add(folderController.GetFolderDialog());
+
+            Folder current = folderController.GetFolderDialog();
+            container.Add(current);
+            NavigatorView.Items.Add(current.Name);
         }
     }
 }
