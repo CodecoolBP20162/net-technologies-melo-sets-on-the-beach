@@ -13,10 +13,10 @@ namespace MeLo
     {
         public string Name { get; set; }
         public string Path { get; set; }
-        private DirectoryInfo currentDirectoryInfo;
-        List<FileSystemInfo> audioItems;
-        List<FileSystemInfo> videoItems;
-        List<FileSystemInfo> pictureItems;
+        public DirectoryInfo currentDirectoryInfo;
+        public List<FileSystemInfo> audioItems;
+        public List<FileSystemInfo> videoItems;
+        public List<FileSystemInfo> pictureItems;
 
         public Folder(string name, string path)
         {
@@ -60,7 +60,7 @@ namespace MeLo
             }
         }
 
-        private void SeparateByType(DirectoryInfo directory)
+        public void SeparateByType(DirectoryInfo directory)
         {
             foreach (FileInfo fileinfo in directory.GetFiles())
             {
@@ -84,9 +84,13 @@ namespace MeLo
             }
         }
 
-        public void ListContent()
+        public void ListContent(ListView targetListView)
         {
-            
+            SeparateByType(currentDirectoryInfo);
+            foreach(FileInfo audioFile in audioItems)
+            {
+                targetListView.Items.Add(audioFile);
+            }
         }
     }
 }
