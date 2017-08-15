@@ -35,7 +35,12 @@ namespace MeLo
 
             Folder current = folderController.GetFolderDialog();
             container.Add(current);
-            NavigatorView.Items.Add(current.Name);
+            NavigatorView.Items.Add(current);
+        }
+
+        private void NavigatorView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // should call selected item's ListContent method
         }
     }
 }
