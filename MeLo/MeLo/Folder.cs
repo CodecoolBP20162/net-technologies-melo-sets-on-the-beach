@@ -5,10 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-<<<<<<< Updated upstream
 using System.Windows.Controls;
-=======
->>>>>>> Stashed changes
 
 namespace MeLo
 {
@@ -17,24 +14,18 @@ namespace MeLo
         public string Name { get; set; }
         public string Path { get; set; }
         private DirectoryInfo currentDirectoryInfo;
-<<<<<<< Updated upstream
         List<FileSystemInfo> audioItems;
         List<FileSystemInfo> videoItems;
         List<FileSystemInfo> pictureItems;
-=======
->>>>>>> Stashed changes
 
         public Folder(string name, string path)
         {
             Name = name;
             Path = path;
             currentDirectoryInfo = new DirectoryInfo(Path);
-<<<<<<< Updated upstream
             audioItems = new List<FileSystemInfo>();
             videoItems = new List<FileSystemInfo>();
             pictureItems = new List<FileSystemInfo>();
-=======
->>>>>>> Stashed changes
         }
 
         private DirectoryInfo[] GetSubdirectories()
@@ -53,20 +44,13 @@ namespace MeLo
             }
         }
 
-<<<<<<< Updated upstream
+
         private FileInfo[] GetFiles( DirectoryInfo directory)
-=======
-        private FileInfo[] GetFiles()
->>>>>>> Stashed changes
         {
             FileInfo[] files;
             try
             {
-<<<<<<< Updated upstream
                 files = directory.GetFiles();
-=======
-                files = currentDirectoryInfo.GetFiles();
->>>>>>> Stashed changes
                 return files;
             }
             catch (UnauthorizedAccessException)
@@ -77,7 +61,6 @@ namespace MeLo
             }
         }
 
-<<<<<<< Updated upstream
         private void SeparateByType(DirectoryInfo directory)
         {
             foreach (FileInfo fileinfo in directory.GetFiles())
@@ -105,11 +88,6 @@ namespace MeLo
         public void ListContent()
         {
             
-=======
-        public void ListContent()
-        {
-
->>>>>>> Stashed changes
         }
     }
     
