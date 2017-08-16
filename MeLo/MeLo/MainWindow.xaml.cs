@@ -65,9 +65,16 @@ namespace MeLo
             NavigatorView.Items.Add(current);
         }
 
+
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+
+        private void NavigatorView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("dsjds");
         }
     }
 }

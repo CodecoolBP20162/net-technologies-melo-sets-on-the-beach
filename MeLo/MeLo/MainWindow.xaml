@@ -28,9 +28,17 @@
                 <MenuItem Header="_All" x:Name="AllBtn"></MenuItem>
             </MenuItem>
         </Menu>
-        <ListBox x:Name="NavigatorView" DisplayMemberPath="Name" Grid.Row="1" VerticalContentAlignment="Top" MinWidth="136" MinHeight="170"/>
+
+        <ListBox x:Name="NavigatorView" DisplayMemberPath="Name" Grid.Row="1" VerticalContentAlignment="Top" MinWidth="136" MinHeight="170" PreviewMouseDown="NavigatorView_MouseDoubleClick"/>
         <ListBox x:Name="PlaylistView" Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="False" MinWidth="136" MinHeight="121"/>
-        <ListView x:Name="ContentView" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291"/>
+        <ListView x:Name="ContentView" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Path}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         <StackPanel VerticalAlignment="Bottom" MaxHeight="20" Grid.Row="2" Panel.ZIndex="2">
             <Button Click="Button_Click">+ Add new playlist</Button></StackPanel>
     </Grid>
