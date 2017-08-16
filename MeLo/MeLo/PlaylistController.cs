@@ -41,8 +41,6 @@ namespace MeLo
                 db.PlaylistSet.Add(newPlaylist);
                 db.SaveChanges();
             }
-            
-
         }
     }
 }
