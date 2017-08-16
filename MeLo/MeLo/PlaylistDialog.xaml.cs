@@ -22,6 +22,8 @@ namespace MeLo
         public PlaylistDialog()
         {
             InitializeComponent();
+            ResizeMode = ResizeMode.NoResize;
+
             Application curApp = Application.Current;
             Window mainWindow = curApp.MainWindow;
             Owner = mainWindow;

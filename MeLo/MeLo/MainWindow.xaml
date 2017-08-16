@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MeLo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" SizeToContent="WidthAndHeight" Loaded="Window_Loaded">
+        Title="MeLo" Height="350" Width="525" SizeToContent="WidthAndHeight" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="22" MaxHeight="22" MinHeight="22"/>
@@ -29,9 +29,10 @@
             </MenuItem>
         </Menu>
         <ListBox x:Name="NavigatorView" Grid.Row="1" VerticalContentAlignment="Top" MinWidth="136" MinHeight="170"/>
-        <ListBox x:Name="PlaylistView" Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="False" MinWidth="136" MinHeight="121"/>
+        <ListBox x:Name="PlaylistView" Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="False" MinWidth="136" MinHeight="121" Margin="0,0,0,20"/>
         <ListView x:Name="ContentView" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291"/>
         <StackPanel VerticalAlignment="Bottom" MaxHeight="20" Grid.Row="2" Panel.ZIndex="2">
-            <Button Click="Button_Click">+ Add new playlist</Button></StackPanel>
+            <Button Click="Button_Click">+ Add new playlist</Button>
+        </StackPanel>
     </Grid>
 </Window>
