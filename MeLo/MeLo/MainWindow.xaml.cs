@@ -70,10 +70,20 @@ namespace MeLo
         {
             System.Windows.Application.Current.Shutdown();
         }
-        
-        private void NavigatorView_MouseClick(object sender, MouseButtonEventArgs e)
+
+        private void NavigatorView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string name = NavigatorView.SelectedItems.ToString();
+            try
+            {
+                Folder newItem = (Folder)e.AddedItems[0];
+                newItem.ListContent(ContentView);
+            }
+            catch { }
+        }
+
+        private void ContentView_DragEnter(object sender, System.Windows.DragEventArgs e)
+        {
+            // to be implemented
         }
     }
 }
