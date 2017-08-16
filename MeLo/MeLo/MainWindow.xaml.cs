@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MeLo.Models;
+using MessageBox = System.Windows.MessageBox;
 
 namespace MeLo
 {
@@ -33,17 +34,6 @@ namespace MeLo
             InitializeComponent();
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-            Folder current = folderController.GetFolderDialog();
-            container.Add(current);
-            NavigatorView.Items.Add(current.Name);
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -68,11 +58,16 @@ namespace MeLo
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            Folder n = new Folder("f","f");
-            DirectoryInfo dir = new DirectoryInfo(@"C:\myDir");
-            n.SeparateByType(dir);
+            Folder current = folderController.GetFolderDialog();
+            container.Add(current);
+            NavigatorView.Items.Add(current);
+        }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }
