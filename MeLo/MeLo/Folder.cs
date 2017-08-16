@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using MeLo.Models;
 
 namespace MeLo
 {
@@ -61,27 +62,39 @@ namespace MeLo
             }
         }
 
-        private void SeparateByType(DirectoryInfo directory)
+        public void SeparateByType(DirectoryInfo directory)
         {
-            foreach (FileInfo fileinfo in directory.GetFiles())
+            using (var db = new MeLoDBModels())
             {
-                if (fileinfo.FullName.Contains("mp3") && !audioItems.Contains(fileinfo))
+                foreach (FileInfo fileinfo in directory.GetFiles())
                 {
-                    audioItems.Add(fileinfo);
+                    string extension = fileinfo.Extension.Substring(1);
+                    int? type;
+                    try
+                    {
+                        type = db.ExtensionSet.Single(e => e.Name == extension).TypeId;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        type = null;
+                    }
+                    if (type == 1)
+                    {
+                        audioItems.Add(fileinfo);
+                    }
+                    else if (type == 2)
+                    {
+                        videoItems.Add(fileinfo);
+                    }
+                    else if (type == 3)
+                    {
+                        pictureItems.Add(fileinfo);
+                    }
                 }
-                else if (fileinfo.FullName.Contains("mp4") && !videoItems.Contains(fileinfo))
+                foreach (DirectoryInfo subdirectoryinfo in directory.GetDirectories())
                 {
-                   videoItems.Add(fileinfo);
+                    SeparateByType(subdirectoryinfo);
                 }
-                else if ((fileinfo.FullName.Contains("jpg") || fileinfo.FullName.Contains("jpeg")
-                    || fileinfo.FullName.Contains("png")) && !pictureItems.Contains(fileinfo))
-                {
-                    pictureItems.Add(fileinfo);
-                }
-            }
-            foreach (DirectoryInfo subdirectoryinfo in directory.GetDirectories())
-            {
-                SeparateByType(subdirectoryinfo);
             }
         }
 

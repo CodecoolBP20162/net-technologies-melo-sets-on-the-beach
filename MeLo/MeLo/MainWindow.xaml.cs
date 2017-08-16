@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,13 @@ namespace MeLo
                 playlistController.SavePlaylistToDatabase(playlistname);
                 dialog.Close();
             }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Folder n = new Folder("f","f");
+            DirectoryInfo dir = new DirectoryInfo(@"C:\myDir");
+            n.SeparateByType(dir);
         }
     }
 }
