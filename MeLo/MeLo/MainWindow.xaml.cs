@@ -70,11 +70,10 @@ namespace MeLo
         {
             System.Windows.Application.Current.Shutdown();
         }
-
-
-        private void NavigatorView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        
+        private void NavigatorView_MouseClick(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("dsjds");
+            string name = NavigatorView.SelectedItems.ToString();
         }
     }
 }
