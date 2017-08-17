@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MeLo.Models;
+using MessageBox = System.Windows.MessageBox;
 
 namespace MeLo
 {
@@ -30,18 +32,6 @@ namespace MeLo
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-            Folder current = folderController.GetFolderDialog();
-            container.Add(current);
-            NavigatorView.Items.Add(current.Name);
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -65,6 +55,34 @@ namespace MeLo
                 playlistController.SavePlaylistToDatabase(playlistname);
                 dialog.Close();
             }
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Folder current = folderController.GetFolderDialog();
+            container.Add(current);
+            FolderWatcher.CreateWatchers(current.Path);
+            NavigatorView.Items.Add(current);
+        }
+        
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void NavigatorView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Folder newItem = (Folder)e.AddedItems[0];
+                newItem.ListContent(ContentView);
+            }
+            catch { }
+        }
+
+        private void ContentView_DragEnter(object sender, System.Windows.DragEventArgs e)
+        {
+            // to be implemented
         }
     }
 }

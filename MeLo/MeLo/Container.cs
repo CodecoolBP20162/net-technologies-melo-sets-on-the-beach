@@ -26,5 +26,17 @@ namespace MeLo
         {
             folders.Add(folder);
         }
+
+        public Folder FindFolder(string name)
+        {
+            foreach (Folder folder in folders)
+            {
+                if (folder.Name == name)
+                {
+                    return folder;
+                }
+            }
+            return null;
+        }
     }
 }
