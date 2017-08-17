@@ -34,7 +34,6 @@ namespace MeLo
             InitializeComponent();
         }
 
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             foreach(var item in playlistController.GetPlaylists())
@@ -62,10 +61,10 @@ namespace MeLo
         {
             Folder current = folderController.GetFolderDialog();
             container.Add(current);
+            FolderWatcher.CreateWatchers(current.Path);
             NavigatorView.Items.Add(current);
         }
-
-
+        
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
@@ -83,11 +82,7 @@ namespace MeLo
 
         private void ContentView_DragEnter(object sender, System.Windows.DragEventArgs e)
         {
-<<<<<<< Updated upstream
             // to be implemented
-=======
-            
->>>>>>> Stashed changes
         }
     }
 }

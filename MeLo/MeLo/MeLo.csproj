@@ -76,6 +76,7 @@
     <Compile Include="Container.cs" />
     <Compile Include="Folder.cs" />
     <Compile Include="FolderController.cs" />
+    <Compile Include="FolderWatcher.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
