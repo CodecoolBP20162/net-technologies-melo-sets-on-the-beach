@@ -83,7 +83,11 @@ namespace MeLo
 
         private void ContentView_DragEnter(object sender, System.Windows.DragEventArgs e)
         {
+<<<<<<< Updated upstream
             // to be implemented
+=======
+            
+>>>>>>> Stashed changes
         }
     }
 }
