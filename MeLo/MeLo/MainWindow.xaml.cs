@@ -28,6 +28,7 @@ namespace MeLo
         private Container container = Container.Setup();
         private FolderController folderController = FolderController.Setup();
         private PlaylistController playlistController = PlaylistController.Setup();
+        private Point startPoint;
 
         public MainWindow()
         {
@@ -75,14 +76,77 @@ namespace MeLo
             try
             {
                 Folder newItem = (Folder)e.AddedItems[0];
+                ContentView.Items.Clear();
                 newItem.ListContent(ContentView);
             }
             catch { }
         }
 
-        private void ContentView_DragEnter(object sender, System.Windows.DragEventArgs e)
+        private void ContentView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // to be implemented
+            // Store the mouse position
+            startPoint = e.GetPosition(null);
+        }
+
+        private void ContentView_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            // Get the current mouse position
+            Point mousePos = e.GetPosition(null);
+            Vector diff = startPoint - mousePos;
+
+            if (e.LeftButton == MouseButtonState.Pressed && (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                // Get the dragged ListViewItem
+                System.Windows.Controls.ListView listView = sender as System.Windows.Controls.ListView;
+                System.Windows.Controls.ListViewItem listViewItem =
+                    FindAnchestor<System.Windows.Controls.ListViewItem>((DependencyObject)e.Source);
+
+                // Find the data behind the ListViewItem
+                try
+                {
+                    dynamic mediaFile = ContentView.SelectedItem;
+                    var path = mediaFile.FullName;
+                    Console.WriteLine(path);
+                    // Initialize the drag & drop operation
+                    System.Windows.DataObject dragData = new System.Windows.DataObject("myFormat", mediaFile);
+                    DragDrop.DoDragDrop(listViewItem, dragData, System.Windows.DragDropEffects.Move);
+                }
+                catch { }
+            }
+        }
+
+        // Helper to search up the VisualTree
+        private static T FindAnchestor<T>(DependencyObject current)
+            where T : DependencyObject
+        {
+            do
+            {
+                if (current is T)
+                {
+                    return (T)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            while (current != null);
+            return null;
+        }
+
+        private void PlaylistView_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("myFormat"))
+            {
+                MediaSet mediaFile = e.Data.GetData("myFormat") as MediaSet;
+                PlaylistView.Items.Add(mediaFile);
+            }
+        }
+
+        private void PlaylistView_DragEnter(object sender, System.Windows.DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent("myFormat") || sender == e.Source)
+            {
+                e.Effects = System.Windows.DragDropEffects.None;
+            }
         }
     }
 }
