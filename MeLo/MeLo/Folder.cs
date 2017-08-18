@@ -10,6 +10,13 @@ using MeLo.Models;
 
 namespace MeLo
 {
+    public enum Type
+    {
+        Audio,
+        Video,
+        Picture
+    }
+
     public class Folder
     {
         public string Name { get; set; }
@@ -63,31 +70,22 @@ namespace MeLo
 
         public void SeparateByType(DirectoryInfo directory)
         {
-            using (var db = new MeLoDBModels())
-            {
                 foreach (FileInfo fileinfo in directory.GetFiles())
                 {
-                    string extension = fileinfo.Extension.Substring(1);
-                    int? type;
-                    try
+                    Type? currentType = GetMediaType(fileinfo);
+                    switch (currentType)
                     {
-                        type = db.ExtensionSet.Single(e => e.Name == extension).TypeId;
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        type = null;
-                    }
-                    if (type == 1)
-                    {
-                        audioItems.Add(fileinfo);
-                    }
-                    else if (type == 2)
-                    {
-                        videoItems.Add(fileinfo);
-                    }
-                    else if (type == 3)
-                    {
-                        pictureItems.Add(fileinfo);
+                        case Type.Audio:
+                            audioItems.Add(fileinfo);
+                            break;
+                        case Type.Video:
+                            videoItems.Add(fileinfo);
+                            break;
+                        case Type.Picture:
+                            pictureItems.Add(fileinfo);
+                            break;
+                        case null:
+                            break;
                     }
                 }
                 foreach (DirectoryInfo subdirectoryinfo in directory.GetDirectories())
@@ -95,6 +93,33 @@ namespace MeLo
                     SeparateByType(subdirectoryinfo);
                 }
             }
+
+
+        public static Type? GetMediaType(FileInfo currentFile)
+        {
+            using (var db = new MeLoDBModels())
+            {
+                string extension = currentFile.Extension.Substring(1);
+                int? type;
+                try
+                {
+                    type = db.ExtensionSet.Single(e => e.Name == extension).TypeId;
+                }
+                catch (InvalidOperationException)
+                {
+                    return null;
+                }
+                switch (type)
+                {
+                    case 1:
+                        return Type.Audio;
+                    case 2:
+                        return Type.Video;
+                    case 3:
+                        return Type.Picture;
+                }
+            }
+            return null;
         }
 
         public void ListContent(ListView targetListView)
@@ -103,6 +128,14 @@ namespace MeLo
             foreach(FileInfo audioFile in audioItems)
             {
                 targetListView.Items.Add(audioFile);
+            }
+            foreach (FileInfo videoFile in videoItems)
+            {
+                targetListView.Items.Add(videoFile);
+            }
+            foreach (FileInfo pictureFile in pictureItems)
+            {
+                targetListView.Items.Add(pictureFile);
             }
         }
     }

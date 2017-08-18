@@ -11,37 +11,38 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Windows.Threading;
-using Microsoft.Win32;
 
 namespace MeLo
 {
     /// <summary>
-    /// Interaction logic for MeLoMediaPlayer.xaml
+    /// Interaction logic for MeLoVideoPlayer.xaml
     /// </summary>
-    public partial class MeLoMediaPlayer : Window
+    public partial class MeLoVideoPlayer : Window
     {
-        private MediaPlayer mediaPlayer = new MediaPlayer();
-
-        public MeLoMediaPlayer(string path)
+        public MeLoVideoPlayer(string path)
         {
             InitializeComponent();
-            mediaPlayer.Open(new Uri(path));
-        }
+            mePlayer.Source = new Uri(path);
+            mePlayer.Play();}
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Play();
+            mePlayer.Play();
         }
 
         private void btnPause_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Pause();
+            mePlayer.Pause();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Stop();
+            mePlayer.Stop();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            mePlayer.Close();
         }
     }
 }
