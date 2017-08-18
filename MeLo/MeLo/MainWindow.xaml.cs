@@ -28,6 +28,7 @@ namespace MeLo
         private Container container = Container.Setup();
         private FolderController folderController = FolderController.Setup();
         private PlaylistController playlistController = PlaylistController.Setup();
+        private ContentViewController contentController = ContentViewController.Setup();
 
         public MainWindow()
         {
@@ -83,6 +84,12 @@ namespace MeLo
         private void ContentView_DragEnter(object sender, System.Windows.DragEventArgs e)
         {
             // to be implemented
+        }
+
+        private void ContentView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            FileInfo currentFile = ContentView.SelectedItem as FileInfo;
+            contentController.Play(currentFile);
         }
     }
 }
