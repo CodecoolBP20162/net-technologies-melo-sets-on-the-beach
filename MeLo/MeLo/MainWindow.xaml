@@ -30,7 +30,7 @@
         </Menu>
         <ListView x:Name="NavigatorView" DisplayMemberPath="Name" Grid.Row="1" VerticalContentAlignment="Top" MinWidth="136" MinHeight="170" SelectionChanged="NavigatorView_SelectionChanged"/>
         <ListView x:Name="PlaylistView" Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="False" MinWidth="136" MinHeight="121" AllowDrop="true" />
-        <ListView x:Name="ContentView" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291">
+        <ListView x:Name="ContentView" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291" MouseDoubleClick="ContentView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>

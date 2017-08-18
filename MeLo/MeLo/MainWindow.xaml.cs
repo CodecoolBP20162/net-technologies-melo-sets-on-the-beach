@@ -84,5 +84,13 @@ namespace MeLo
         {
             // to be implemented
         }
+
+        private void ContentView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            FileInfo currentFile = ContentView.SelectedItem as FileInfo;
+            string path = currentFile.FullName;
+            MeLoMediaPlayer player = new MeLoMediaPlayer(path);
+            player.Show();
+        }
     }
 }

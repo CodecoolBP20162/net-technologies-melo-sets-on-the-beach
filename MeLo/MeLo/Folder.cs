@@ -100,9 +100,9 @@ namespace MeLo
         public void ListContent(ListView targetListView)
         {
             SeparateByType(currentDirectoryInfo);
-            foreach(FileInfo picture in pictureItems)
+            foreach(FileInfo audioFile in audioItems)
             {
-                targetListView.Items.Add(picture);
+                targetListView.Items.Add(audioFile);
             }
         }
     }

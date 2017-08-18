@@ -81,12 +81,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MeLoMediaPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PlaylistDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MeLoMediaPlayer.xaml.cs">
+      <DependentUpon>MeLoMediaPlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\ExtensionSet.cs" />
     <Compile Include="Models\MediaSet.cs" />
     <Compile Include="Models\MeLoDBModels.cs" />
