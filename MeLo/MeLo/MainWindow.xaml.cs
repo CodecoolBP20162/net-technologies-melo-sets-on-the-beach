@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MeLo.Models;
 using MessageBox = System.Windows.MessageBox;
+using System.Windows.Controls.Primitives;
 
 namespace MeLo
 {
@@ -28,7 +29,7 @@ namespace MeLo
         private Container container = Container.Setup();
         private FolderController folderController = FolderController.Setup();
         private PlaylistController playlistController = PlaylistController.Setup();
-        private Point startPoint;
+        private bool _isDragging = false;
 
         public MainWindow()
         {
@@ -37,9 +38,9 @@ namespace MeLo
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach(var item in playlistController.GetPlaylists())
+            foreach (var item in playlistController.GetPlaylists())
             {
-                PlaylistView.Items.Add(item.Name);
+                PlaylistView.Items.Add(item);
             }
         }
 
@@ -65,7 +66,7 @@ namespace MeLo
             FolderWatcher.CreateWatchers(current.Path);
             NavigatorView.Items.Add(current);
         }
-        
+
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
@@ -85,23 +86,15 @@ namespace MeLo
         private void ContentView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Store the mouse position
-            startPoint = e.GetPosition(null);
         }
 
         private void ContentView_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            // Get the current mouse position
-            Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-
-            if (e.LeftButton == MouseButtonState.Pressed && (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            if (!_isDragging && e.LeftButton == MouseButtonState.Pressed)
             {
-                // Get the dragged ListViewItem
-                System.Windows.Controls.ListView listView = sender as System.Windows.Controls.ListView;
-                System.Windows.Controls.ListViewItem listViewItem =
-                    FindAnchestor<System.Windows.Controls.ListViewItem>((DependencyObject)e.Source);
-
+                _isDragging = true;
+                // fake listviewitem
+                System.Windows.Controls.ListViewItem dummy = new System.Windows.Controls.ListViewItem();
                 // Find the data behind the ListViewItem
                 try
                 {
@@ -109,41 +102,58 @@ namespace MeLo
                     var path = mediaFile.FullName;
                     Console.WriteLine(path);
                     // Initialize the drag & drop operation
-                    System.Windows.DataObject dragData = new System.Windows.DataObject("myFormat", mediaFile);
-                    DragDrop.DoDragDrop(listViewItem, dragData, System.Windows.DragDropEffects.Move);
+                    System.Windows.DataObject dragData = new System.Windows.DataObject("mediaFile", path);
+                    DragDrop.DoDragDrop(dummy, dragData, System.Windows.DragDropEffects.Move);
                 }
                 catch { }
             }
-        }
-
-        // Helper to search up the VisualTree
-        private static T FindAnchestor<T>(DependencyObject current)
-            where T : DependencyObject
-        {
-            do
-            {
-                if (current is T)
-                {
-                    return (T)current;
-                }
-                current = VisualTreeHelper.GetParent(current);
-            }
-            while (current != null);
-            return null;
+            _isDragging = false;
         }
 
         private void PlaylistView_Drop(object sender, System.Windows.DragEventArgs e)
         {
-            if (e.Data.GetDataPresent("myFormat"))
+            if (e.Data.GetDataPresent("mediaFile"))
             {
-                MediaSet mediaFile = e.Data.GetData("myFormat") as MediaSet;
-                PlaylistView.Items.Add(mediaFile);
+                string sourcePath = e.Data.GetData("mediaFile") as string;
+                int index = playlistController.GetCurrentIndex(PlaylistView, e.GetPosition);
+                PlaylistSet playlist = PlaylistView.Items[index] as PlaylistSet;
+                using (var db = new MeLoDBModels())
+                {
+                    var mediaSet = db.MediaSet.ToArray();
+                    MediaSet mediaToAdd = mediaSet.Where(m => m.Path == sourcePath).Single();
+                    if (mediaToAdd != null)
+                    {
+                        mediaToAdd.PlaylistSet.Add(playlist);
+                        Console.WriteLine("már létezett");
+                    }
+                    else
+                    {
+                        mediaToAdd.Path = e.Data.GetData("mediaFile") as string;
+                        mediaToAdd.TypeId = 3;
+                        //mediaToAdd.PlaylistSet.Add(playlist);
+                        db.MediaSet.Add(mediaToAdd);
+                        Console.WriteLine("nem volt még");
+                    }
+                    db.SaveChanges();
+                }
             }
         }
 
         private void PlaylistView_DragEnter(object sender, System.Windows.DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent("myFormat") || sender == e.Source)
+            if (!e.Data.GetDataPresent(typeof(MediaSet)) || sender == e.Source)
+            {
+                e.Effects = System.Windows.DragDropEffects.None;
+            }
+        }
+
+        private void PlaylistView_DragOver(object sender, System.Windows.DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(MediaSet)))
+            {
+                e.Effects = System.Windows.DragDropEffects.Move;
+            }
+            else
             {
                 e.Effects = System.Windows.DragDropEffects.None;
             }
