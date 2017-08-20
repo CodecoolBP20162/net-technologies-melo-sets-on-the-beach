@@ -37,7 +37,7 @@
             </ListView.View>
         </ListView>
         <ListView x:Name="ContentView" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" MinWidth="381" MinHeight="291" PreviewMouseLeftButtonDown="ContentView_PreviewMouseLeftButtonDown" 
-          PreviewMouseMove="ContentView_MouseMove">
+          PreviewMouseMove="ContentView_MouseMove" MouseDoubleClick="ContentView_MouseDoubleClick_1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>

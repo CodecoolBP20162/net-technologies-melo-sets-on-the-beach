@@ -179,7 +179,7 @@ namespace MeLo
             catch { }
         }
 
-        private void ContentView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ContentView_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
             FileInfo currentFile = ContentView.SelectedItem as FileInfo;
             contentController.Play(currentFile);
