@@ -19,11 +19,6 @@ namespace MeLo.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MediaSet>()
-                .HasMany(e => e.PlaylistSet)
-                .WithMany(e => e.MediaSet)
-                .Map(m => m.ToTable("MediaPlaylist").MapLeftKey("Media_Id").MapRightKey("Playlist_Id"));
-
             modelBuilder.Entity<TypeSet>()
                 .HasMany(e => e.ExtensionSet)
                 .WithRequired(e => e.TypeSet)

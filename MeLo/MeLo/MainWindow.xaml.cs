@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using MeLo.Models;
 using MessageBox = System.Windows.MessageBox;
 using System.Windows.Controls.Primitives;
+using System.Text.RegularExpressions;
 
 namespace MeLo
 {
@@ -117,23 +118,22 @@ namespace MeLo
                 string sourcePath = e.Data.GetData("mediaFile") as string;
                 int index = playlistController.GetCurrentIndex(PlaylistView, e.GetPosition);
                 PlaylistSet playlist = PlaylistView.Items[index] as PlaylistSet;
+                string playlistName = playlist.Name;
+                MediaSet mediaToAdd = new MediaSet();
+                string result = "";
                 using (var db = new MeLoDBModels())
                 {
-                    var mediaSet = db.MediaSet.ToArray();
-                    MediaSet mediaToAdd = mediaSet.Where(m => m.Path == sourcePath).Single();
-                    if (mediaToAdd != null)
+                    mediaToAdd.FullName = e.Data.GetData("mediaFile") as string;
+                    Regex r = new Regex(@"([^\\]+$)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                    MatchCollection m = r.Matches(mediaToAdd.FullName);
+                    foreach (Match item in m)
                     {
-                        mediaToAdd.PlaylistSet.Add(playlist);
-                        Console.WriteLine("már létezett");
+                        result += item.Groups[1].ToString();
                     }
-                    else
-                    {
-                        mediaToAdd.Path = e.Data.GetData("mediaFile") as string;
-                        mediaToAdd.TypeId = 3;
-                        //mediaToAdd.PlaylistSet.Add(playlist);
-                        db.MediaSet.Add(mediaToAdd);
-                        Console.WriteLine("nem volt még");
-                    }
+                    mediaToAdd.Name = result;
+                    mediaToAdd.TypeId = 3;
+                    mediaToAdd.PlaylistSetId = db.PlaylistSet.Where(p => p.Name == playlistName).Single().Id;
+                    db.MediaSet.Add(mediaToAdd);
                     db.SaveChanges();
                 }
             }
@@ -157,6 +157,25 @@ namespace MeLo
             {
                 e.Effects = System.Windows.DragDropEffects.None;
             }
+        }
+
+        private void PlaylistView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                PlaylistSet newItem = (PlaylistSet)e.AddedItems[0];
+                ContentView.Items.Clear();
+                using (var db = new MeLoDBModels())
+                {
+                    var playlistId = db.PlaylistSet.Where(p => p.Name == newItem.Name).Single().Id;
+                    var content = db.MediaSet.Where(m => m.PlaylistSetId == playlistId).ToArray();
+                    foreach (var item in content)
+                    {
+                        ContentView.Items.Add(item);
+                    }
+                }
+            }
+            catch { }
         }
     }
 }

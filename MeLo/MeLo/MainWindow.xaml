@@ -29,7 +29,7 @@
             </MenuItem>
         </Menu>
         <ListView x:Name="NavigatorView" DisplayMemberPath="Name" Grid.Row="1" VerticalContentAlignment="Top" MinWidth="136" MinHeight="170" SelectionChanged="NavigatorView_SelectionChanged"/>
-        <ListView x:Name="PlaylistView" Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="True" MinWidth="136" MinHeight="121" AllowDrop="true" Drop="PlaylistView_Drop" DragEnter="PlaylistView_DragEnter" DragOver="PlaylistView_DragOver">
+        <ListView x:Name="PlaylistView" Grid.Row="2" VerticalContentAlignment="Bottom" ScrollViewer.CanContentScroll="True" MinWidth="136" MinHeight="121" AllowDrop="true" Drop="PlaylistView_Drop" DragEnter="PlaylistView_DragEnter" DragOver="PlaylistView_DragOver" SelectionChanged="PlaylistView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
