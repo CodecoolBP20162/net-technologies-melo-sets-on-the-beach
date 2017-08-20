@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/10/2017 11:23:57
--- Generated from EDMX file: E:\codecool\advanced-MeLo\net-technologies-melo-sets-on-the-beach\MeLo\MeLo\Models\MeLoModel.edmx
+-- Date Created: 08/20/2017 21:00:27
+-- Generated from EDMX file: C:\codes\net-technologies-melo-sets-on-the-beach\MeLo\MeLo\Models\Model1.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,17 +17,14 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_TypeExtension]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ExtensionSet] DROP CONSTRAINT [FK_TypeExtension];
+IF OBJECT_ID(N'[dbo].[FK_MediaSetPlaylistSet]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MediaSet] DROP CONSTRAINT [FK_MediaSetPlaylistSet];
 GO
 IF OBJECT_ID(N'[dbo].[FK_MediaType]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[MediaSet] DROP CONSTRAINT [FK_MediaType];
 GO
-IF OBJECT_ID(N'[dbo].[FK_MediaPlaylist_MediaSet]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MediaPlaylist] DROP CONSTRAINT [FK_MediaPlaylist_MediaSet];
-GO
-IF OBJECT_ID(N'[dbo].[FK_MediaPlaylist_PlaylistSet]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MediaPlaylist] DROP CONSTRAINT [FK_MediaPlaylist_PlaylistSet];
+IF OBJECT_ID(N'[dbo].[FK_TypeExtension]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ExtensionSet] DROP CONSTRAINT [FK_TypeExtension];
 GO
 
 -- --------------------------------------------------
@@ -46,9 +43,6 @@ GO
 IF OBJECT_ID(N'[dbo].[TypeSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TypeSet];
 GO
-IF OBJECT_ID(N'[dbo].[MediaPlaylist]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MediaPlaylist];
-GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -65,8 +59,10 @@ GO
 -- Creating table 'MediaSet'
 CREATE TABLE [dbo].[MediaSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Path] nvarchar(max)  NOT NULL,
-    [TypeId] int  NOT NULL
+    [FullName] nvarchar(max)  NOT NULL,
+    [TypeId] int  NOT NULL,
+    [PlaylistSetId] int  NULL,
+    [Name] nvarchar(max)  NULL
 );
 GO
 
@@ -81,13 +77,6 @@ GO
 CREATE TABLE [dbo].[TypeSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL
-);
-GO
-
--- Creating table 'MediaPlaylist'
-CREATE TABLE [dbo].[MediaPlaylist] (
-    [MediaSet_Id] int  NOT NULL,
-    [PlaylistSet_Id] int  NOT NULL
 );
 GO
 
@@ -119,12 +108,6 @@ ADD CONSTRAINT [PK_TypeSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [MediaSet_Id], [PlaylistSet_Id] in table 'MediaPlaylist'
-ALTER TABLE [dbo].[MediaPlaylist]
-ADD CONSTRAINT [PK_MediaPlaylist]
-    PRIMARY KEY CLUSTERED ([MediaSet_Id], [PlaylistSet_Id] ASC);
-GO
-
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
@@ -144,6 +127,21 @@ ON [dbo].[ExtensionSet]
     ([TypeId]);
 GO
 
+-- Creating foreign key on [PlaylistSetId] in table 'MediaSet'
+ALTER TABLE [dbo].[MediaSet]
+ADD CONSTRAINT [FK_MediaSetPlaylistSet]
+    FOREIGN KEY ([PlaylistSetId])
+    REFERENCES [dbo].[PlaylistSet]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_MediaSetPlaylistSet'
+CREATE INDEX [IX_FK_MediaSetPlaylistSet]
+ON [dbo].[MediaSet]
+    ([PlaylistSetId]);
+GO
+
 -- Creating foreign key on [TypeId] in table 'MediaSet'
 ALTER TABLE [dbo].[MediaSet]
 ADD CONSTRAINT [FK_MediaType]
@@ -157,30 +155,6 @@ GO
 CREATE INDEX [IX_FK_MediaType]
 ON [dbo].[MediaSet]
     ([TypeId]);
-GO
-
--- Creating foreign key on [MediaSet_Id] in table 'MediaPlaylist'
-ALTER TABLE [dbo].[MediaPlaylist]
-ADD CONSTRAINT [FK_MediaPlaylist_MediaSet]
-    FOREIGN KEY ([MediaSet_Id])
-    REFERENCES [dbo].[MediaSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating foreign key on [PlaylistSet_Id] in table 'MediaPlaylist'
-ALTER TABLE [dbo].[MediaPlaylist]
-ADD CONSTRAINT [FK_MediaPlaylist_PlaylistSet]
-    FOREIGN KEY ([PlaylistSet_Id])
-    REFERENCES [dbo].[PlaylistSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_MediaPlaylist_PlaylistSet'
-CREATE INDEX [IX_FK_MediaPlaylist_PlaylistSet]
-ON [dbo].[MediaPlaylist]
-    ([PlaylistSet_Id]);
 GO
 
 -- --------------------------------------------------

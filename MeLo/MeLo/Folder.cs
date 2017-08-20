@@ -34,6 +34,7 @@ namespace MeLo
             audioItems = new List<FileSystemInfo>();
             videoItems = new List<FileSystemInfo>();
             pictureItems = new List<FileSystemInfo>();
+            SeparateByType(currentDirectoryInfo);
         }
 
         private DirectoryInfo[] GetSubdirectories()
@@ -124,7 +125,6 @@ namespace MeLo
 
         public void ListContent(ListView targetListView)
         {
-            SeparateByType(currentDirectoryInfo);
             foreach(FileInfo audioFile in audioItems)
             {
                 targetListView.Items.Add(audioFile);
@@ -139,6 +139,4 @@ namespace MeLo
             }
         }
     }
-    
-
 }

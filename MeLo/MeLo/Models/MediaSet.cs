@@ -9,22 +9,19 @@ namespace MeLo.Models
     [Table("MediaSet")]
     public partial class MediaSet
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MediaSet()
-        {
-            PlaylistSet = new HashSet<PlaylistSet>();
-        }
-
         public int Id { get; set; }
 
         [Required]
-        public string Path { get; set; }
+        public string FullName { get; set; }
 
         public int TypeId { get; set; }
 
-        public virtual TypeSet TypeSet { get; set; }
+        public int? PlaylistSetId { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlaylistSet> PlaylistSet { get; set; }
+        public string Name { get; set; }
+
+        public virtual PlaylistSet PlaylistSet { get; set; }
+
+        public virtual TypeSet TypeSet { get; set; }
     }
 }
