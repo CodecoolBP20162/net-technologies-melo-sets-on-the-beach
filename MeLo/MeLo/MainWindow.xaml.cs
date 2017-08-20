@@ -30,6 +30,7 @@ namespace MeLo
         private Container container = Container.Setup();
         private FolderController folderController = FolderController.Setup();
         private PlaylistController playlistController = PlaylistController.Setup();
+        private ContentViewController contentController = ContentViewController.Setup();
         private bool _isDragging = false;
 
         public MainWindow()
@@ -176,6 +177,12 @@ namespace MeLo
                 }
             }
             catch { }
+        }
+
+        private void ContentView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            FileInfo currentFile = ContentView.SelectedItem as FileInfo;
+            contentController.Play(currentFile);
         }
     }
 }

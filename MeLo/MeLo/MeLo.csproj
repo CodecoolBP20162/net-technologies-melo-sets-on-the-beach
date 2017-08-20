@@ -74,6 +74,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Container.cs" />
+    <Compile Include="ContentViewController.cs" />
     <Compile Include="Folder.cs" />
     <Compile Include="FolderController.cs" />
     <Compile Include="FolderWatcher.cs" />
@@ -81,17 +82,38 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MeLoMusicPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MeLoVideoPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PictureViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PlaylistDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MeLoMusicPlayer.xaml.cs">
+      <DependentUpon>MeLoMusicPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MeLoVideoPlayer.xaml.cs">
+      <DependentUpon>MeLoVideoPlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\ExtensionSet.cs" />
     <Compile Include="Models\MediaSet.cs" />
     <Compile Include="Models\MeLoDBModels.cs" />
     <Compile Include="Models\PlaylistSet.cs" />
     <Compile Include="Models\TypeSet.cs" />
+    <Compile Include="PictureViewer.xaml.cs">
+      <DependentUpon>PictureViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlaylistController.cs" />
     <Compile Include="PlaylistDialog.xaml.cs">
       <DependentUpon>PlaylistDialog.xaml</DependentUpon>
