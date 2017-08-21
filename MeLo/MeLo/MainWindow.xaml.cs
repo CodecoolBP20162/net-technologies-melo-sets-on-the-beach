@@ -54,9 +54,10 @@ namespace MeLo
 
             if (dialog.DialogResult == true)
             {
-                string playlistname = dialog.newPlaylistTextbox.Text;
-                PlaylistView.Items.Add(playlistname);
-                playlistController.SavePlaylistToDatabase(playlistname);
+                PlaylistSet newPlaylist = new PlaylistSet();
+                newPlaylist.Name = dialog.newPlaylistTextbox.Text;
+                PlaylistView.Items.Add(newPlaylist);
+                playlistController.SavePlaylistToDatabase(newPlaylist);
                 dialog.Close();
             }
         }

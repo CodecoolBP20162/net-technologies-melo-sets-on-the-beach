@@ -37,13 +37,11 @@ namespace MeLo
             return playlists;
         }
 
-        public void SavePlaylistToDatabase(string name)
+        public void SavePlaylistToDatabase(PlaylistSet pl)
         {
             using (var db = new MeLoDBModels())
             {
-                PlaylistSet newPlaylist = new PlaylistSet();
-                newPlaylist.Name = name;
-                db.PlaylistSet.Add(newPlaylist);
+                db.PlaylistSet.Add(pl);
                 db.SaveChanges();
             }
         }
